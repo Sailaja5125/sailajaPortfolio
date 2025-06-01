@@ -1,11 +1,11 @@
 import { app } from "./app.js";
 import { DataBase } from "./database/db.js";
-import "dotenv/config.js"; // Import dotenv to load environment variables
-import { configDotenv } from "dotenv"; // Import configDotenv to load environment variables from .env file
+// import "dotenv/config.js"; // Import dotenv to load environment variables
+// import { configDotenv } from "dotenv"; // Import configDotenv to load environment variables from .env file
 
 
-// Load environment variables from .env file
-config({ path: "./.env" });
+// // Load environment variables from .env file
+// config({ path: "./.env" });
 
 const startServer = async () => {
   try {
