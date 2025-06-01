@@ -1,0 +1,211 @@
+backend of blog should have 
+
+title -- string
+author -- string
+category -- string
+tags -- [string]
+description -- string
+thumbnail -- img/string
+content -- string/html
+ReadTime -- string
+sources--[string/url]
+
+subpages 
+* create blog 
+* your blogs -- only for me  
+* blog page 
+
+operations on blogs 
+same (create , edit ), delete ,search (title , author , category , tags) , fetch blogs
+
+
+blog main page 
+-- hero section for showing top 3 submitted blogs (recent) tag add cheyalli 
+-- show all the blogs with pagination just like slider
+-- top right corner create blog button
+
+create blog page 
+divided into two sections 
+text editor 
+side bar with add title, add thumbnail image section, add description text area 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import BlogEditor from "../components/EditBlogEditor";
+import axios from "axios";
+import { BlogContext } from "../context/BlogContext";
+
+function EditBlog() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { text } = useContext(BlogContext);
+  const [form, setForm] = useState({
+    title: "",
+    author: "",
+    category: "",
+    tags: [],
+    tagInput: "",
+    sources: [],
+    sourceInput: "",
+    description: "",
+    thumbnail: null,
+    readTime: "",
+    content: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Fetch blog data
+  useEffect(() => {
+    const fetchBlog = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`http://localhost:8080/api/v1/searchblogs?id=${id}`);
+        const arr = res.data.data;
+
+        if (arr.length > 0) {
+          setForm({
+            title: arr[0].title || "",
+            author: arr[0].author || "",
+            category: arr[0].category || "",
+            tags: arr[0].tags || [],
+            tagInput: "",
+            sources: arr[0].sources || [],
+            sourceInput: "",
+            description: arr[0].description || "",
+            thumbnail: null,
+            readTime: arr[0].readTime || "",
+            content: arr[0].content || ""
+          });
+        }
+      } catch {
+        setError("Failed to load blog data");
+        toast.error("Failed to load blog data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlog();
+  }, [id]);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "thumbnail" && files.length) {
+      setForm(prev => ({ ...prev, thumbnail: files[0] }));
+    } else if (name === "content") {
+      setForm(prev => ({ ...prev, content: text }));
+    } else {
+      setForm(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  // Tag handlers
+  const handleAddTag = (e) => {
+    e.preventDefault();
+    if (form.tagInput.trim()) {
+      setForm(prev => ({ ...prev, tags: [...prev.tags, prev.tagInput.trim()], tagInput: "" }));
+    }
+  };
+
+  const removeTag = (tag) => {
+    setForm(prev => ({ ...prev, tags: prev.tags.filter(t => t !== tag) }));
+  };
+
+  // Source handlers
+  const handleAddSource = (e) => {
+    e.preventDefault();
+    if (form.sourceInput.trim()) {
+      setForm(prev => ({ ...prev, sources: [...prev.sources, prev.sourceInput.trim()], sourceInput: "" }));
+    }
+  };
+
+  const removeSource = (src) => {
+    setForm(prev => ({ ...prev, sources: prev.sources.filter(s => s !== src) }));
+  };
+
+  const checkFormValidity = () => {
+    return form.title && form.author && form.category && form.content;
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, val]) => {
+      if (key === 'thumbnail' && val) {
+        payload.append('thumbnail', val);
+      } else if (Array.isArray(val)) {
+        payload.append(key, JSON.stringify(val));
+      } else {
+        payload.append(key, val);
+      }
+    });
+
+    try {
+      const res = await axios.put(`http://localhost:8080/api/v1/editblog/${id}`, payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (res.status === 200) {
+        toast.success("Blog updated successfully");
+        navigate(`/blog/${id}`);
+      }
+    } catch (error) {
+      console.error("Error updating blog:", error);
+      setError("Failed to update blog");
+      toast.error("Failed to update blog");
+    }
+  };
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+  if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
+
+  return (
+    <form className="w-full bg-white absolute top-16" onSubmit={handleSave}>
+      <Toaster />
+      <div className="pt-16 px-5 pb-10 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">Edit Blog</h2>
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="w-full lg:w-3/5 p-2 lg:p-5">
+            <BlogEditor value={form.content} />
+          </div>
+          <div className="w-full lg:w-2/5 p-2 lg:p-5">
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col">
+                <label htmlFor="title" className="font-semibold">Title</label>
+                <input id="title" name="title" value={form.title} onChange={handleChange} className="border p-2 rounded" />
+              </div>
+              <button type="submit" disabled={!checkFormValidity()} className="mt-4 bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50">
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
+}
+
+export default EditBlog;

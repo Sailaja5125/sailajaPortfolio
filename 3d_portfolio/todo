@@ -1,0 +1,33 @@
+Tasks to be completed
+-- create blog section
+    -- each input designing @done
+    -- responsive @done
+    -- upgrades @done
+-- backend @done
+    -- database @done
+    -- controllers @done
+        -- create @done
+        -- delete @done
+        -- edit @done
+        -- fetch all @done
+        -- search @done
+    -- multer @done
+    -- utils @done
+    -- routes @done
+    -- testing @done
+-- main blog page
+    -- hero section
+    -- display sec
+    -- perform fetching and displaying all blogs 
+    -- search and display blog
+    -- responsive
+-- all blogs display personal page for editing and deleting 
+    -- display  all blogs with delete and edit option
+-- edit page personal /[id]
+    -- same like create page but with content written with the editing option
+ -- scratch works 
+    -- portfolio
+        -- project section responsive 
+        -- about content
+        -- Content Page Changes
+-- Deployment & Hosting
