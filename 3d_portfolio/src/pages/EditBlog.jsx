@@ -30,7 +30,7 @@ function EditBlog() {
     const fetchBlog = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:8080/api/v1/searchblogs?id=${id}`);
+        const res = await axios.get(`https://portfoliobackend-qlpb.onrender.com/api/v1/searchblogs?id=${id}`);
         const blog = res.data.data[0];
         if (blog) {
           setForm({

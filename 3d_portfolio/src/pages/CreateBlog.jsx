@@ -92,7 +92,7 @@ export default function CreateBlog() {
       formData.append("content", form.content);
       formData.append("readTime", form.readTime);
       formData.append("sources", JSON.stringify(form.sources));
-      const response = await axios.post("http://localhost:8080/api/v1/createBlog", formData, {
+      const response = await axios.post("https://portfoliobackend-qlpb.onrender.com/api/v1/createBlog", formData, {
         headers: {
           "Content-Type": "application/json",
         },
