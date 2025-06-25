@@ -4,7 +4,7 @@ import Blog from "./Blog";
 import CreateBlog from "./CreateBlog";
 import BlogEdit from "./BlogEdit";
 import EditBlog from "./EditBlog";
-import BlogPage from "./blogPage";
+import PageBlog from "./PageBlog";
 export {
     Home,
     Portfolio,
@@ -12,5 +12,5 @@ export {
     CreateBlog,
     BlogEdit,
     EditBlog,
-    BlogPage
+    PageBlog
 }

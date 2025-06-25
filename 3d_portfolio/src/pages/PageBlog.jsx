@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const BlogPage = () => {
+const PageBlog = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -261,4 +261,4 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+export default PageBlog;

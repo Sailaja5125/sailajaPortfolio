@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Navbar } from "./components";
-import { Blog, BlogPage, CreateBlog, EditBlog, Home } from "./pages";
+import { Blog, PageBlog, CreateBlog, EditBlog, Home } from "./pages";
 import Portfolio from "./pages/Portfolio";
 import { BlogProvider } from "./context/BlogContextProvider";
 import { BlogEdit } from "./pages";
@@ -26,7 +26,7 @@ const App = () => {
                     <Route path='/blog' element={<Blog/>} />
                     <Route path='/blogedit' element={<BlogEdit/>} />
                   <Route path='/editblog/:id' element={<EditBlog/>} />
-                  <Route path='/blogpage/:id' element={<BlogPage/>} />
+                  <Route path='/blogpage/:id' element={<PageBlog/>} />
                 </Routes>
                 {/* <Footer /> */}
               </>

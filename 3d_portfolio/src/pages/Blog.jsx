@@ -30,7 +30,7 @@ const Blog = () => {
 const fetchBlogs = async () => {
   setLoading(true);
   try {
-    const res = await axios.get('https://portfoliobackend-qlpb.onrender.com/api/v1/getblogs');
+    const res = await axios.get('https://portfoliobackend-4v4r.onrender.com/api/v1/getblogs');
     console.log("Fetched blogs:", res.data.data);
     const blogs = res.data.data
     setPosts(blogs);
