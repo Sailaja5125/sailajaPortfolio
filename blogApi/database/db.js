@@ -1,6 +1,5 @@
 import mongooose from "mongoose"
 
-
 const DataBase = async()=>{
     try {
         await mongooose.connect(process.env.MONGO_DB);

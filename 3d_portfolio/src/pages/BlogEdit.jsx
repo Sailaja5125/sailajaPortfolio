@@ -15,7 +15,7 @@ const BlogEdit = () => {
     const fetchBlogs = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('https://portfoliobackend-qlpb.onrender.com/api/v1/getblogs');
+        const res = await axios.get('https://portfoliobackend-4v4r.onrender.com/api/v1/getblogs');
         setPosts(res.data.data || res.data);
       } catch {
         setError('Failed to load blogs.');
