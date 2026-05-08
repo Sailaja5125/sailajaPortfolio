@@ -8,7 +8,7 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <h1 className='sm:text-xl sm:leading-snug text-center bg-blue-950 py-4 px-8 text-white mx-5 rounded-xl'>
         Hi, I'm
-        <span className='font-semibold mx-2 text-white'>Sandy</span>
+        <span className='font-semibold mx-2 text-white'>Sailaja</span>
         👋
         <br />
         A Computer Science Engineering Student

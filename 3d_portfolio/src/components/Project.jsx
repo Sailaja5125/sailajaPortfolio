@@ -1,16 +1,16 @@
-import React, { useRef } from 'react';
-import { projects } from '../content';
-import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useRef } from "react";
+import { projects } from "../content";
+import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Project() {
   const sliderRef = useRef(null);
 
   const scrollLeft = () => {
-    sliderRef.current?.scrollBy({ left: -300, behavior: 'smooth' });
+    sliderRef.current?.scrollBy({ left: -300, behavior: "smooth" });
   };
 
   const scrollRight = () => {
-    sliderRef.current?.scrollBy({ left: 300, behavior: 'smooth' });
+    sliderRef.current?.scrollBy({ left: 300, behavior: "smooth" });
   };
 
   return (
@@ -50,18 +50,22 @@ export default function Project() {
                   hover:shadow-lg transition snap-start
                 "
               >
-                <img
-                  src={`/api/placeholder/${300 + idx}/${200}`}
-                  alt={project.title}
-                  className="w-full h-48 object-cover"
-                />
+                <div className="w-full h-48 overflow-hidden relative group">
+                  <video
+                    src={`/api/videos/${project.video}`} // replace with your video path
+                    alt={project.title}
+                    className="w-full h-48 object-cover"
+                    muted
+                    loop
+                    playsInline
+                  />
+                </div>
+
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2 text-gray-800">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 mb-4">
-                    {project.description}
-                  </p>
+                  <p className="text-gray-600 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech, i) => (
                       <span

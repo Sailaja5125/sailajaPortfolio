@@ -22,127 +22,83 @@ import {
     summiz,
     tailwindcss,
     threads,
-    typescript
+    typescript,
+    c,
+    java,
+    python,
+    r,
+    sql,
+    postgres,
+    spring,
+    
+
 } from "../assets/icons";
 
 export const skills = [
     {
-        imageUrl: css,
-        name: "CSS",
+        imageUrl: c,
+        name: "C",
+        type: "Programming Language",
+    },
+    {
+        imageUrl: java,
+        name: "Java",
+        type: "Programming Language",
+    },
+    {
+        imageUrl: python,
+        name: "Python",
+        type: "Programming Language",
+    },
+    {
+        imageUrl: r,
+        name: "R",
+        type: "Programming Language",
+    },
+    {
+        imageUrl: react,
+        name: "React.js",
         type: "Frontend",
     },
     {
-        imageUrl: express,
-        name: "Express",
+        imageUrl: spring, // ⚠️ Make sure you have an icon for Spring Boot in your assets
+        name: "Spring Boot",
         type: "Backend",
     },
     {
-        imageUrl: git,
-        name: "Git",
-        type: "Version Control",
+        imageUrl: express,
+        name: "Express.js",
+        type: "Backend",
     },
     {
-        imageUrl: github,
-        name: "GitHub",
-        type: "Version Control",
+        imageUrl: sql,
+        name: "SQL",
+        type: "Database",
     },
     {
-        imageUrl: html,
-        name: "HTML",
-        type: "Frontend",
-    },
-    {
-        imageUrl: javascript,
-        name: "JavaScript",
-        type: "Frontend",
+        imageUrl: postgres,
+        name: "PostgreSQL",
+        type: "Database",
     },
     {
         imageUrl: mongodb,
         name: "MongoDB",
         type: "Database",
     },
-    {
-        imageUrl: motion,
-        name: "Motion",
-        type: "Animation",
-    },
-    {
-        imageUrl: mui,
-        name: "Material-UI",
-        type: "Frontend",
-    },
-    {
-        imageUrl: nextjs,
-        name: "Next.js",
-        type: "Frontend",
-    },
-    {
-        imageUrl: nodejs,
-        name: "Node.js",
-        type: "Backend",
-    },
-    {
-        imageUrl: react,
-        name: "React",
-        type: "Frontend",
-    },
-    {
-        imageUrl: redux,
-        name: "Redux",
-        type: "State Management",
-    },
-    {
-        imageUrl: sass,
-        name: "Sass",
-        type: "Frontend",
-    },
-    {
-        imageUrl: tailwindcss,
-        name: "Tailwind CSS",
-        type: "Frontend",
-    },
-    {
-        imageUrl: typescript,
-        name: "TypeScript",
-        type: "Frontend",
-    }
+
 ];
 
  export const projects = [
     {
-      title: 'E-commerce Platform',
-      description: 'A full-stack e-commerce application with user authentication, product catalog, and payment processing.',
-      technologies: ['React.js', 'Java', 'CSS'],
-      link: '#'
+      title: 'AI-Agent - Communication Automation',
+      description: 'An AI-driven system that auto-generates and sends emails in one click using Vercel SDK. Includes bulk messaging workflows with spreadsheet import and regex extraction, reducing manual effort by 80%.',
+      technologies: ['Next.js', 'MongoDB', 'Express.js', 'Nodemailer', 'Vercel SDK'],
+      link: 'https://github.com/Sailaja5125/Ai-agent.git'
     },
     {
-      title: 'Data Visualization Dashboard',
-      description: 'Interactive dashboard to visualize complex datasets with filtering and sorting capabilities.',
-      technologies: ['React.js', 'JavaScript', 'HTML', 'CSS'],
-      link: '#'
-    },
-    {
-      title: 'Inventory Management System',
-      description: 'System for tracking inventory levels, orders, sales, and deliveries for a retail business.',
-      technologies: ['Python', 'JavaScript', 'HTML', 'CSS'],
-      link: '#'
-    },
-    {
-      title: 'E-commerce Platform1',
-      description: 'A full-stack e-commerce application with user authentication, product catalog, and payment processing.',
-      technologies: ['React.js', 'Java', 'CSS'],
-      link: '#'
-    },
-    {
-      title: 'E-commerce Platform4',
-      description: 'A full-stack e-commerce application with user authentication, product catalog, and payment processing.',
-      technologies: ['React.js', 'Java', 'CSS'],
-      link: '#'
-    },
-    {
-      title: 'E-commerce Platform5',
-      description: 'A full-stack e-commerce application with user authentication, product catalog, and payment processing.',
-      technologies: ['React.js', 'Java', 'CSS'],
-      link: '#'
-    },
-  ];
+      title: 'Social Media Application',
+      description: 'A cross-platform social media app with real-time posts and media uploads. Optimized Clerk authentication to reduce login time and integrated Cloudinary for fast, reliable media storage.',
+      technologies: ['React Native', 'NativeWind', 'Express.js', 'MongoDB', 'Clerk', 'Cloudinary'],
+      link: 'https://github.com/Sailaja5125/social-media.git'
+    }
+];

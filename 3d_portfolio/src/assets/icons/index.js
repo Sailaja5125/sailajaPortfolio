@@ -26,8 +26,22 @@ import arrow from './arrow.svg'
 import contact from './contact.svg'
 import soundon from './soundon.png'
 import soundoff from './soundoff.png'
+import c from './cc.svg'
+import java from './jj.svg'
+import python from './pyt.svg'
+import r from './rr.svg'
+import spring from './spring.svg'
+import sql from './sql.svg'
+import postgres from './post.svg'
 
 export {
+    c,
+    java,
+    python,
+    r,
+    sql,
+    postgres,
+    spring,
     css,
     express,
     git,
