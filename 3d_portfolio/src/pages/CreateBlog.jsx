@@ -18,6 +18,7 @@ export default function CreateBlog() {
   });
   const [currentTag, setCurrentTag] = useState("");
   const [currentSource, setCurrentSource] = useState("");
+
   const { text } = useContext(BlogContext);
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -124,7 +125,9 @@ export default function CreateBlog() {
       if (response.status === 200) {
         console.log("Blog created successfully:", response.data);
         toast.success("Blog submitted successfully!");
+        
       }
+
     } catch (error) {
       console.log(`${api}/createBlog`);
       console.log("Error creating blog:", error);
