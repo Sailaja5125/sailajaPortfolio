@@ -3,6 +3,7 @@ import { Search, Calendar, User, ArrowRight, Menu, X, BookOpen, Zap, Heart, Filt
 import  Logo  from "../assets/images/Logo.png"
 import axios from 'axios';
 import Fuse from 'fuse.js';
+import { api } from '../content';
 import { useNavigate } from 'react-router-dom';
 const Blog = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Blog = () => {
 const fetchBlogs = async () => {
   setLoading(true);
   try {
-    const res = await axios.get('https://portfoliobackend-4v4r.onrender.com/api/v1/getblogs');
+    const res = await axios.get(`${api}/getblogs`);
     console.log("Fetched blogs:", res.data.data);
     const blogs = res.data.data
     setPosts(blogs);

@@ -1,9 +1,9 @@
-
-import React, { useContext, useEffect, useState , useRef } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { TextEditor } from "../components";
 import { BlogContext } from "../context/BlogContext";
-import toast , { Toaster } from "react-hot-toast";
-import axios from "axios";        
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { api } from "../content";
 export default function CreateBlog() {
   const [form, setForm] = useState({
     title: "",
@@ -18,21 +18,19 @@ export default function CreateBlog() {
   });
   const [currentTag, setCurrentTag] = useState("");
   const [currentSource, setCurrentSource] = useState("");
-  const {text} = useContext(BlogContext);
+  const { text } = useContext(BlogContext);
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "thumbnail" && files.length) {
       setForm((prev) => ({ ...prev, thumbnail: files[0] }));
-    }
-    else {
+    } else {
       setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  
-   useEffect(()=>{
-   setForm((prev) => ({ ...prev, content: text }));
-   },[text])
+  useEffect(() => {
+    setForm((prev) => ({ ...prev, content: text }));
+  }, [text]);
 
   const handleAddTag = (e) => {
     e.preventDefault();
@@ -53,9 +51,20 @@ export default function CreateBlog() {
   const handleAddSource = (e) => {
     e.preventDefault();
     const src = currentSource.trim();
-    // invalid 
-    const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-    if (!urlPattern.test(src)){ toast.error("Invalid URL"); return false;}
+    // invalid
+    const urlPattern =
+      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    if (!urlPattern.test(src)) {
+      toast.error("Invalid URL");
+      return false;
+    }
+
+    try {
+      new URL(src.startsWith("http") ? src : `https://${src}`);
+    } catch {
+      toast.error("Invalid URL");
+      return;
+    }
 
     if (src && !form.sources.includes(src)) {
       setForm((prev) => ({ ...prev, sources: [...prev.sources, src] }));
@@ -70,17 +79,28 @@ export default function CreateBlog() {
     }));
   };
 
-  const checkFormValidity = ()=>{
-    const { title, author, category, description , content} = form;
-    if (!title || !author || !category || !description || !content || form.tags.length === 0 ||form.sources.length === 0) {
+  const checkFormValidity = () => {
+    const { title, author, category, description, content } = form;
+    if (
+      !title ||
+      !author ||
+      !category ||
+      !description ||
+      !content ||
+      form.tags.length === 0 ||
+      form.sources.length === 0
+    ) {
       return false;
     }
-    
+
     return true;
-  }
-  const handleSubmit = async(e) => {
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!checkFormValidity()){ toast.error("Please fill all the required fields."); return ;}
+    if (!checkFormValidity()) {
+      toast.error("Please fill all the required fields.");
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("title", form.title);
@@ -88,29 +108,35 @@ export default function CreateBlog() {
       formData.append("category", form.category);
       formData.append("tags", JSON.stringify(form.tags));
       formData.append("description", form.description);
-      formData.append("image", form.thumbnail);
+      formData.append("thumbnail", form.thumbnail ? form.thumbnail : ""); // Append the file or an empty string if no file is selected
       formData.append("content", form.content);
       formData.append("readTime", form.readTime);
       formData.append("sources", JSON.stringify(form.sources));
-      const response = await axios.post("https://portfoliobackend-4v4r.onrender.com/api/v1/createBlog", formData, {
+      console.log(form);
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+      const response = await axios.post(`${api}/createBlog`, formData, {
         headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if(response.status === 200){
-         console.log("Blog created successfully:", response.data);
-         toast.success("Blog submitted successfully!");
+      "Content-Type": "multipart/form-data"
+      }
+      });
+      if (response.status === 200) {
+        console.log("Blog created successfully:", response.data);
+        toast.success("Blog submitted successfully!");
       }
     } catch (error) {
+      console.log(`${api}/createBlog`);
       console.log("Error creating blog:", error);
-      toast.error("Failed to submit blog.Internal server issue.");  
+      toast.error("Failed to submit blog.Internal server issue.");
     }
-     
   };
 
   return (
     <form onSubmit={handleSubmit} className="w-full bg-white">
-      <div><Toaster/></div>
+      <div>
+        <Toaster />
+      </div>
       <div className="pt-16 px-5 pb-10 max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
           Write. Reflect. Repeat.
@@ -134,7 +160,10 @@ export default function CreateBlog() {
             <div className="w-full px-4 py-6 border border-gray-300 rounded-lg shadow-sm flex flex-col gap-6">
               {/* Title */}
               <div className="flex flex-col">
-                <label htmlFor="title" className="text-gray-700 font-semibold mb-1">
+                <label
+                  htmlFor="title"
+                  className="text-gray-700 font-semibold mb-1"
+                >
                   Title
                 </label>
                 <input
@@ -150,7 +179,10 @@ export default function CreateBlog() {
               {/* Author & Category Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex flex-col">
-                  <label htmlFor="author" className="text-gray-700 font-semibold mb-1">
+                  <label
+                    htmlFor="author"
+                    className="text-gray-700 font-semibold mb-1"
+                  >
                     Author
                   </label>
                   <input
@@ -164,7 +196,10 @@ export default function CreateBlog() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="category" className="text-gray-700 font-semibold mb-1">
+                  <label
+                    htmlFor="category"
+                    className="text-gray-700 font-semibold mb-1"
+                  >
                     Category
                   </label>
                   <input
@@ -181,13 +216,15 @@ export default function CreateBlog() {
               {/* Tags & Sources */}
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col">
-                  <label className="text-gray-700 font-semibold mb-1">Tags</label>
+                  <label className="text-gray-700 font-semibold mb-1">
+                    Tags
+                  </label>
                   <input
                     name="tagInput"
                     type="text"
                     value={currentTag}
                     onChange={(e) => setCurrentTag(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleAddTag(e)}
+                    onKeyDown={(e) => e.key === "Enter" && handleAddTag(e)}
                     placeholder="Add a tag and press Enter"
                     className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
@@ -210,13 +247,15 @@ export default function CreateBlog() {
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <label className="text-gray-700 font-semibold mb-1">Sources</label>
+                  <label className="text-gray-700 font-semibold mb-1">
+                    Sources
+                  </label>
                   <input
                     name="sourceInput"
                     type="text"
                     value={currentSource}
                     onChange={(e) => setCurrentSource(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleAddSource(e)}
+                    onKeyDown={(e) => e.key === "Enter" && handleAddSource(e)}
                     placeholder="Add a source and press Enter"
                     className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
                   />
@@ -241,7 +280,10 @@ export default function CreateBlog() {
               </div>
               {/* Description */}
               <div className="flex flex-col">
-                <label htmlFor="description" className="text-gray-700 font-semibold mb-1">
+                <label
+                  htmlFor="description"
+                  className="text-gray-700 font-semibold mb-1"
+                >
                   Description
                 </label>
                 <textarea
@@ -257,36 +299,43 @@ export default function CreateBlog() {
               {/* Thumbnail & Read Time Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                 <div className="flex flex-col w-full max-w-md mx-auto">
-  <label htmlFor="thumbnail" className="text-gray-700 font-semibold mb-2">
-    Upload Thumbnail
-  </label>
-  
-  <div className="border border-gray-300 rounded-lg p-3 bg-gray-50 shadow-sm flex flex-col items-center justify-center">
-    <input
-      id="thumbnail"
-      name="thumbnail"
-      type="file"
-      accept="image/*"
-      onChange={handleChange}
-      className="hidden"
-    />
-    <label
-      htmlFor="thumbnail"
-      className="cursor-pointer px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all"
-    >
-      Select Image
-    </label>
+                  <label
+                    htmlFor="thumbnail"
+                    className="text-gray-700 font-semibold mb-2"
+                  >
+                    Upload Thumbnail
+                  </label>
 
-    {form.thumbnail && (
-      <div className="mt-4 flex flex-col items-center">
-        <p className="text-sm text-gray-600">Selected: {form.thumbnail.name}</p>
-        
-      </div>
-    )}
-  </div>
-</div>
+                  <div className="border border-gray-300 rounded-lg p-3 bg-gray-50 shadow-sm flex flex-col items-center justify-center">
+                    <input
+                      id="thumbnail"
+                      name="thumbnail"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleChange}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="thumbnail"
+                      className="cursor-pointer px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all"
+                    >
+                      Select Image
+                    </label>
+
+                    {form.thumbnail && (
+                      <div className="mt-4 flex flex-col items-center">
+                        <p className="text-sm text-gray-600">
+                          Selected: {form.thumbnail.name}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
                 <div className="flex flex-col">
-                  <label htmlFor="readTime" className="text-gray-700 font-semibold mb-1">
+                  <label
+                    htmlFor="readTime"
+                    className="text-gray-700 font-semibold mb-1"
+                  >
                     Read Time
                   </label>
                   <input
@@ -304,8 +353,7 @@ export default function CreateBlog() {
               <button
                 type="submit"
                 className="self-end px-6 py-2 text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={!checkFormValidity()}                
-                onClick={handleSubmit}
+                disabled={!checkFormValidity()}
               >
                 Submit
               </button>

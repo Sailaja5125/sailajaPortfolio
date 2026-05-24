@@ -96,9 +96,26 @@ export const skills = [
       link: 'https://github.com/Sailaja5125/Ai-agent.git'
     },
     {
-      title: 'Social Media Application',
+      title: 'Recycling Marketplace Application',
+      description: 'A Platfoorm connecting recyclers and waste generators. Features real-time inventory updates, secure transactions, and a user-friendly interface. Implemented a dynamic pricing algorithm based on market demand and material type.',
+      technologies: ['React.js', 'Spring Boot', 'PostgreSQL', 'Cloudinary'],
+      
+      link: 'https://github.com/Sailaja5125/social-media.git'
+    },
+    {
+      title: 'Social Media Application (cloned)',
       description: 'A cross-platform social media app with real-time posts and media uploads. Optimized Clerk authentication to reduce login time and integrated Cloudinary for fast, reliable media storage.',
       technologies: ['React Native', 'NativeWind', 'Express.js', 'MongoDB', 'Clerk', 'Cloudinary'],
       link: 'https://github.com/Sailaja5125/social-media.git'
-    }
+    },
+    {
+      title: 'AI PDF Summarizer',
+      description: 'A cross-platform application that uses AI to automatically summarize PDF documents, saving users time and effort.',
+      technologies: ['Next.js', 'Redis', 'qdrant', 'Express.js', 'MongoDB', 'OpenAI API'],
+      link: 'https://github.com/Sailaja5125/AiChatPDF.git'
+    },
+
+
 ];
+
+export const api = "http://localhost:5000/api/v1";

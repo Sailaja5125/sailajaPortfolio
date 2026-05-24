@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Trash2, Edit2 } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { api } from '../content';
 const BlogEdit = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ const BlogEdit = () => {
     const fetchBlogs = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('https://portfoliobackend-4v4r.onrender.com/api/v1/getblogs');
+        const res = await axios.get(`${api}/getblogs`);
         setPosts(res.data.data || res.data);
       } catch {
         setError('Failed to load blogs.');

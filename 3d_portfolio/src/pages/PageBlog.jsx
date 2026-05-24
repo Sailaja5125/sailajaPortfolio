@@ -5,7 +5,7 @@ import {
   Twitter, Facebook, Linkedin, Check, Clock, Eye, MessageCircle, Bookmark
 } from 'lucide-react';
 import axios from 'axios';
-
+import { api } from '../content';
 const PageBlog = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const PageBlog = () => {
     const fetchBlog = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://portfoliobackend-4v4r.onrender.com/api/v1/searchblogs?id=${id}`);
+        const response = await axios.get(`${api}/searchblogs?id=${id}`);
         const blog = response.data.data[0];
         if (blog) {
           setBlogData(blog);

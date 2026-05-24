@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { Editor } from "primereact/editor";
 import axios from "axios";
-
+import { api } from '../content';
 function EditBlog() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function EditBlog() {
     const fetchBlog = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`https://portfoliobackend-4v4r.onrender.com/api/v1/searchblogs?id=${id}`);
+        const res = await axios.get(`${api}/searchblogs?id=${id}`);
         const blog = res.data.data[0];
         if (blog) {
           setForm({
