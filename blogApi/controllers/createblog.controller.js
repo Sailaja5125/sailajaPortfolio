@@ -5,6 +5,7 @@ const createblog = async (req, res) => {
   try {
     const { title, author, category, tags, description, content, readTime, sources } = req.body;
 
+    console.log("Received data:", { title, author, category, tags, description, content, readTime, sources });
     // Validate required fields
     if (!title || !author || !category || !tags || !description || !content || !sources) {
       return res.status(401).json({ message: "All fields are required" });
